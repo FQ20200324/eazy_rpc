@@ -16,6 +16,10 @@
             <groupId>com.deepleaper</groupId>
             <artifactId>test-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.deepleaper</groupId>
+            <artifactId>rpc-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

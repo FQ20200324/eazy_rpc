@@ -1,4 +1,4 @@
-package com.fq.service;
+package com.fq.server.service;
 
 import cn.hutool.core.util.IdUtil;
 import com.fq.api.User;
