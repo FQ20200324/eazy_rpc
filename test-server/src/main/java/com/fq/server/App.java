@@ -8,7 +8,8 @@ import com.fq.server.service.UserServiceImpl;
 public class App {
     public static void main(String[] args) {
         RpcServiceConfig config = new RpcServiceConfig(new UserServiceImpl());
-
+//        config.setVersion("1.0");
+//        config.setGroup("common");
         RpcServer rpcServer = new SocketRpcServer(8888);
         rpcServer.publishService(config);
 
