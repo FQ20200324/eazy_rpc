@@ -16,7 +16,5 @@ public class App {
         rpcServer.strat();
 
 
-
-
     }
 }
