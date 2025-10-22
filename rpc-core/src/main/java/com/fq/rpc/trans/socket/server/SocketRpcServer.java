@@ -1,9 +1,10 @@
 package com.fq.rpc.trans.socket.server;
 
 import com.fq.rpc.config.RpcServiceConfig;
+import com.fq.rpc.constant.RpcConstant;
 import com.fq.rpc.handler.RpcReqHandler;
 import com.fq.rpc.provider.ServiceProvider;
-import com.fq.rpc.provider.impl.SimpleServiceProvider;
+import com.fq.rpc.provider.impl.SimpleServiceProviderImpl;
 import com.fq.rpc.trans.RpcServer;
 import com.fq.rpc.util.ThreadPoolUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,12 @@ public class SocketRpcServer implements RpcServer {
     private final ServiceProvider serviceProvider;
     private final ExecutorService executor;
 
+    public SocketRpcServer() {
+        this(RpcConstant.port);
+    }
+
     public SocketRpcServer(int port) {
-        this(port, new SimpleServiceProvider());
+        this(port, new SimpleServiceProviderImpl());
     }
 
     public SocketRpcServer(int port, ServiceProvider provider) {

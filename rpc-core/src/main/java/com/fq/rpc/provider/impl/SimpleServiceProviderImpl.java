@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class SimpleServiceProvider implements ServiceProvider {
+public class SimpleServiceProviderImpl implements ServiceProvider {
     private final Map<String, Object> SERVICE_CACHE = new HashMap<>();
 
     @Override
