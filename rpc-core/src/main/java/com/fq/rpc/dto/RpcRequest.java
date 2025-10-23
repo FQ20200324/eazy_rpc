@@ -36,8 +36,8 @@ public class RpcRequest implements Serializable {
 
     public String rpcServiceName(){
         return getInterFaceName() +
-                " version:" + StrUtil.blankToDefault(getVersion(), StrUtil.EMPTY) +
-                " group:" + StrUtil.blankToDefault(getGroup(), StrUtil.EMPTY);
+                "_version:" + StrUtil.blankToDefault(getVersion(), StrUtil.EMPTY) +
+                "_group:" + StrUtil.blankToDefault(getGroup(), StrUtil.EMPTY);
     }
 
 }

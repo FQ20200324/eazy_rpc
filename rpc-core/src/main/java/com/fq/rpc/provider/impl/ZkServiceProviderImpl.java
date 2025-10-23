@@ -1,15 +1,16 @@
 package com.fq.rpc.provider.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.fq.rpc.config.RpcServiceConfig;
 import com.fq.rpc.constant.RpcConstant;
 import com.fq.rpc.factory.SingletonFactory;
 import com.fq.rpc.provider.ServiceProvider;
 import com.fq.rpc.registry.ServiceRegistry;
 import com.fq.rpc.registry.impl.ZkServiceRegistryImpl;
+import lombok.SneakyThrows;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,27 +28,29 @@ public class ZkServiceProviderImpl implements ServiceProvider {
 
     @Override
     public void publishService(RpcServiceConfig config) {
-        config.rpcServiceNames().forEach(rpcServiceName -> {
-                    // 存入<serviceName， service>
-                    SERVICE_CACHE.put(rpcServiceName, config.getService());
-                    // 获取address和port
-            String            hostAddress       = null;
-            try {
-                hostAddress = InetAddress.getLocalHost().getHostAddress();
-            } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
-            }
-            int               port              = RpcConstant.port;
-                    InetSocketAddress address = new InetSocketAddress(hostAddress, port);
-                    serviceRegistry.registerService(rpcServiceName, address);
+        config.rpcServiceNames().forEach(rpcServiceName -> publishService(config, rpcServiceName));
+    }
 
-                }
-
-        );
+    @SneakyThrows
+    private void publishService(RpcServiceConfig config, String rpcServiceName) {
+        // 获取address和port 注册到zk
+        String            hostAddress = InetAddress.getLocalHost().getHostAddress();
+        int               port        = RpcConstant.port;
+        InetSocketAddress address     = new InetSocketAddress(hostAddress, port);
+        serviceRegistry.registerService(rpcServiceName, address);
+        // 存入<serviceName， service>
+        SERVICE_CACHE.put(rpcServiceName, config.getService());
     }
 
     @Override
     public Object getService(String rpcServiceName) {
-        return null;
+        if (StrUtil.isBlank(rpcServiceName)) {
+            throw new IllegalArgumentException("rpcServiceName is blank");
+        }
+
+        if(!SERVICE_CACHE.containsKey(rpcServiceName)){
+            throw new IllegalArgumentException("rpcServiceName 未注册: " + rpcServiceName);
+        }
+        return SERVICE_CACHE.get(rpcServiceName);
     }
 }

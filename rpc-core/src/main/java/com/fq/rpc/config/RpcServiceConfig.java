@@ -23,7 +23,7 @@ public class RpcServiceConfig {
 
     public List<String> rpcServiceNames() {
         return interfaceName().stream()
-                .map(name -> name +" version:"+ version +" group:"+ group)
+                .map(name -> name +"_version:"+ version +"_group:"+ group)
                 .toList();
     }
 

@@ -10,7 +10,7 @@ public class App {
         RpcServiceConfig config = new RpcServiceConfig(new UserServiceImpl());
 //        config.setVersion("1.0");
 //        config.setGroup("common");
-        RpcServer rpcServer = new SocketRpcServer(8888);
+        RpcServer rpcServer = new SocketRpcServer();
         rpcServer.publishService(config);
 
         rpcServer.strat();
